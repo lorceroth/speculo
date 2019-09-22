@@ -1,0 +1,10 @@
+{
+  "plugins": [
+    {
+      "name": "clock",
+      "position": "0 0",
+      "size": "50 auto",
+      "props": {}
+    }
+  ]
+}
