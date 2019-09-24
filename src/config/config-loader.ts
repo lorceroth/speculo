@@ -5,8 +5,13 @@ const CONFIG_PATH = 'config.json';
 export class ConfigLoader {
 
   public async load(): Promise<IConfig> {
-    let response = await fetch(CONFIG_PATH);
+    try {
+      let response = await fetch(CONFIG_PATH);
 
-    return await response.json() as IConfig;
+      return await response.json() as IConfig;
+    }
+    catch (err) {
+      console.error('Error loading config:', err);
+    }
   }
 }

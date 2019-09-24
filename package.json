@@ -1,9 +1,11 @@
 {
+  "name": "speculo",
+  "private": true,
   "scripts": {
-    "build": "webpack --config webpack/webpack.config.main.js",
-    "watch": "webpack --config webpack/webpack.config.main.js -w",
-    "build:plugins": "webpack --config webpack/webpack.config.plugins.js",
-    "watch:plugins": "webpack --config webpack/webpack.config.plugins.js -w",
+    "build": "webpack",
+    "watch": "webpack -w",
+    "build:plugin": "webpack --config webpack.config.plugins.js",
+    "watch:plugin": "webpack --config webpack.config.plugins.js -w",
     "serve": "http-server ./dist"
   },
   "dependencies": {

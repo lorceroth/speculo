@@ -1,7 +1,6 @@
 export interface IPlugin {
-  name: string;
+  path: string;
+  version: string;
   component: any;
-  position: string;
-  size: string;
   props: any;
 }

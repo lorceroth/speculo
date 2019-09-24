@@ -33,5 +33,5 @@ function renderPlugins(plugins: IPlugin[]) {
 }
 
 function renderPlugin(plugin: IPlugin, index: number) {
-  return React.createElement(plugin.component, {key: index}, null);
+  return React.createElement(plugin.component, {key: index, ...plugin.props}, null);
 }

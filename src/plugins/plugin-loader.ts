@@ -1,7 +1,7 @@
 import * as $script from 'scriptjs';
 
-import { IConfig } from "../config/config";
-import { IPlugin } from "./plugin";
+import { IConfig, IPluginConfig } from "../config/config";
+import { IPlugin } from './plugin';
 
 const PLUGINS_PATH = '/plugins';
 export const PLUGINS_SCRIPT_ID = 'plugins';
@@ -16,23 +16,28 @@ export class PluginLoader {
     let plugins: IPlugin[] = new Array<IPlugin>();
 
     let paths = config.plugins
-      .map(plugin => PLUGINS_PATH.concat(`/${plugin.name}.js`));
+      .map(pluginConfig => this.getPluginPath(pluginConfig));
 
     $script(paths, PLUGINS_SCRIPT_ID, () => {
-      for (let plugin of config.plugins) {
-        let component = window[plugin.name];
+      for (let pluginConfig of config.plugins) {
+        let component = (<any>window[pluginConfig.componentName]).default;
         if (component) {
-          plugins.push({
-            name: plugin.name,
+          let plugin = {
+            path: this.getPluginPath(pluginConfig),
+            version: pluginConfig.version,
             component: component,
-            position: plugin.position,
-            size: plugin.size,
-            props: plugin.props,
-          });
+            props: Object.assign({
+              position: pluginConfig.position,
+              size: pluginConfig.size,
+            }, pluginConfig.props),
+          };
 
-          console.log('Plugin loaded:', plugin);
-        } else {
-          console.error('Plugin component is not accessable:', plugin);
+          plugins.push(plugin);
+
+          console.log('Loaded plugin:', plugin);
+        }
+        else {
+          console.error('Plugin component is not accessable:', pluginConfig);
         }
       }
 
@@ -40,5 +45,9 @@ export class PluginLoader {
     });
 
     return plugins;
+  }
+
+  private getPluginPath(plugin: IPluginConfig): string {
+    return PLUGINS_PATH.concat(`/${plugin.name}-${plugin.version}.js`);
   }
 }

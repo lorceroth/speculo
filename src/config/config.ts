@@ -1,5 +1,12 @@
-import { IPlugin } from "../plugins/plugin";
-
 export interface IConfig {
-  plugins: IPlugin[];
+  plugins: IPluginConfig[];
+}
+
+export interface IPluginConfig {
+  name: string;
+  version: string;
+  componentName: any;
+  position: string;
+  size: string;
+  props: any;
 }
