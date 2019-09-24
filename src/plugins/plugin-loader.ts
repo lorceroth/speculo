@@ -20,28 +20,13 @@ export class PluginLoader {
 
     $script(paths, PLUGINS_SCRIPT_ID, () => {
       for (let pluginConfig of config.plugins) {
-        let component = (<any>window[pluginConfig.componentName]).default;
-        if (component) {
-          let plugin = {
-            path: this.getPluginPath(pluginConfig),
-            version: pluginConfig.version,
-            component: component,
-            props: Object.assign({
-              position: pluginConfig.position,
-              size: pluginConfig.size,
-            }, pluginConfig.props),
-          };
-
+        let plugin = this.createPlugin(pluginConfig);
+        if (plugin) {
           plugins.push(plugin);
-
-          console.log('Loaded plugin:', plugin);
-        }
-        else {
-          console.error('Plugin component is not accessable:', pluginConfig);
         }
       }
 
-      console.log('Plugins loaded:', plugins.length);
+      console.log('Loaded plugins:', plugins);
     });
 
     return plugins;
@@ -49,5 +34,26 @@ export class PluginLoader {
 
   private getPluginPath(plugin: IPluginConfig): string {
     return PLUGINS_PATH.concat(`/${plugin.name}-${plugin.version}.js`);
+  }
+
+  private createPlugin(pluginConfig: IPluginConfig): IPlugin | null {
+    try {
+      let component = (<any>window[pluginConfig.componentName]).default;
+
+      return {
+        path: this.getPluginPath(pluginConfig),
+        version: pluginConfig.version,
+        component: component,
+        props: Object.assign({
+          position: pluginConfig.position,
+          size: pluginConfig.size,
+        }, pluginConfig.props),
+      }
+    }
+    catch (err) {
+      console.error('Plugin component is not accessable:', pluginConfig);
+
+      return null;
+    }
   }
 }
