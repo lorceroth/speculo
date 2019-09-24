@@ -1,0 +1,14 @@
+.clock {
+  position: absolute;
+  white-space: nowrap;
+
+  &__time {
+    font-size: 72px;
+    font-weight: 300;
+  }
+
+  &__date {
+    font-size: 32px;
+    font-weight: 500;
+  }
+}
