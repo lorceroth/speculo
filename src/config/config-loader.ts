@@ -4,7 +4,7 @@ const CONFIG_PATH = 'config.json';
 
 export class ConfigLoader {
 
-  public async load(): Promise<IConfig> {
+  async load(): Promise<IConfig> {
     try {
       let response = await fetch(CONFIG_PATH);
 

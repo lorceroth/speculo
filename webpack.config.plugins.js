@@ -14,7 +14,7 @@ const manifest = JSON.parse(manifestContent);
 module.exports = {
   mode: 'development',
   output: {
-    path: path.join(__dirname, 'dist/plugins'),
+    path: path.resolve(__dirname, 'dist/plugins'),
     filename: `${manifest.name}-${manifest.version}.js`,
     library: manifest.componentName,
   },
@@ -51,5 +51,9 @@ module.exports = {
   },
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.json', '.scss'],
+    alias: {
+      '@app': path.resolve(__dirname, 'src/'),
+      '@plugins': path.resolve(__dirname, 'plugins/'),
+    }
   },
 };

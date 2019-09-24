@@ -7,7 +7,7 @@ module.exports = {
   mode: 'development',
   entry: './src/main.ts',
   output: {
-    path: path.join(__dirname, 'dist'),
+    path: path.resolve(__dirname, 'dist'),
     filename: 'main.js',
   },
   module: {
@@ -39,6 +39,9 @@ module.exports = {
   },
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.json', '.scss'],
+    alias: {
+      '@app': path.resolve(__dirname, 'src/'),
+    },
   },
   plugins: [
     new CopyWebpackPlugin([

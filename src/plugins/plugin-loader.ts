@@ -12,7 +12,7 @@ export class PluginLoader {
     console.log('Plugins loaded from:', PLUGINS_PATH);
   }
 
-  public load(config: IConfig): IPlugin[] {
+  load(config: IConfig): IPlugin[] {
     let plugins: IPlugin[] = new Array<IPlugin>();
 
     let paths = config.plugins
