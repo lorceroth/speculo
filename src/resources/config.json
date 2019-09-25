@@ -1,9 +1,7 @@
 {
   "plugins": [
     {
-      "name": "clock",
-      "version": "1.0.0",
-      "componentName": "Clock",
+      "name": "Clock",
       "position": "0 0",
       "size": "",
       "props": {}

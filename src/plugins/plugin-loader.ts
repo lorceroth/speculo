@@ -33,16 +33,15 @@ export class PluginLoader {
   }
 
   private getPluginPath(plugin: IPluginConfig): string {
-    return PLUGINS_PATH.concat(`/${plugin.name}-${plugin.version}.js`);
+    return PLUGINS_PATH.concat(`/${plugin.name}.js`);
   }
 
   private createPlugin(pluginConfig: IPluginConfig): IPlugin | null {
     try {
-      let component = (<any>window[pluginConfig.componentName]).default;
+      let component = (<any>window[pluginConfig.name]).default;
 
       return {
         path: this.getPluginPath(pluginConfig),
-        version: pluginConfig.version,
         component: component,
         props: Object.assign({
           position: pluginConfig.position,

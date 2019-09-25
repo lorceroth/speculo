@@ -6,17 +6,15 @@ if (/webpack/.test(entry)) {
   throw new Error('An entry must be provided, e.g. "yarn build:plugin plugins/clock/clock.tsx"');
 }
 
-const pluginDir = path.join(__dirname,
-  entry.split(/\/|\\/g).slice(0, -1).join('/'));
-const manifestContent = fs.readFileSync(`${pluginDir}/plugin.json`, 'utf8');
-const manifest = JSON.parse(manifestContent);
+const entrySegments = entry.split(/\/|\\/g);
+const componentName = entrySegments[entrySegments.length - 1].replace(/.tsx/, '');
 
 module.exports = {
   mode: 'development',
   output: {
     path: path.resolve(__dirname, 'dist/plugins'),
-    filename: `${manifest.name}-${manifest.version}.js`,
-    library: manifest.componentName,
+    filename: `${componentName}.js`,
+    library: componentName,
   },
   module: {
     rules: [

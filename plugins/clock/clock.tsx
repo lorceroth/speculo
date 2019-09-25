@@ -1,9 +1,9 @@
 import * as React from 'react';
 import * as moment from 'moment';
 
-import { PluginContainer, IPluginContainerProps } from '@app/common';
+import { PluginContainer, IPluginContainerProps } from '@app/components';
 
-import './clock.scss';
+import './Clock.scss';
 
 interface IProps extends IPluginContainerProps {
   showDate: boolean;
