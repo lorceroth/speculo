@@ -1,6 +1,8 @@
 const path = require('path');
 const fs = require('fs');
 
+const environment = process.env.NODE_ENV;
+
 const entry = process.argv.pop();
 if (/webpack/.test(entry)) {
   throw new Error('An entry must be provided, e.g. "yarn build:plugin plugins/clock/clock.tsx"');
@@ -10,7 +12,7 @@ const entrySegments = entry.split(/\/|\\/g);
 const componentName = entrySegments[entrySegments.length - 1].replace(/.tsx/, '');
 
 module.exports = {
-  mode: 'development',
+  mode: environment,
   output: {
     path: path.resolve(__dirname, 'dist/plugins'),
     filename: `${componentName}.js`,
@@ -46,6 +48,7 @@ module.exports = {
   externals: {
     React: 'react',
     ReactDOM: 'react-dom',
+    // moment: 'moment',
   },
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.json', '.scss'],
