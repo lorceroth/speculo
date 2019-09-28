@@ -1,8 +1,6 @@
 import * as React from 'react';
 import * as moment from 'moment';
-
 import { PluginContainer, IPluginContainerProps } from '@app/components';
-
 import './Clock.scss';
 
 interface IProps extends IPluginContainerProps {
@@ -16,16 +14,20 @@ interface IState {
 
 export default class Clock extends React.Component<IProps, IState> {
 
-  private interval;
-
   static defaultProps: IProps = {
     showDate: true,
     dateFormat: 'LL',
   };
 
-  state: IState = {
-    now: moment(),
-  };
+  private interval: NodeJS.Timeout;
+
+  constructor(props: IProps) {
+    super(props);
+
+    this.state = {
+      now: moment(),
+    };
+  }
 
   get time() {
     return this.state.now.format('HH:mm');

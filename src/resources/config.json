@@ -5,6 +5,18 @@
       "position": "0 0",
       "size": "",
       "props": {}
+    },
+    {
+      "name": "Reddit",
+      "position": "0 154px",
+      "size": "",
+      "props": {
+        "subredditNames": [
+          "PHP",
+          "dotnet",
+          "python"
+        ]
+      }
     }
   ]
 }
