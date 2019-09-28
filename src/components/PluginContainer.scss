@@ -1,0 +1,17 @@
+.plugin-container {
+  &--debug {
+    border: 2px dashed tomato;
+  }
+
+  &__position {
+    position: absolute;
+    top: -22px;
+    right: -2px;
+    font-family: monospace;
+    font-weight: 700;
+    font-size: 15px;
+    color: #fff;
+    background-color: tomato;
+    padding: 3px 5px;
+  }
+}

@@ -2,23 +2,22 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import * as $script from 'scriptjs';
 
-import { ConfigLoader } from './config';
+import { ConfigLoader, IConfig } from './config';
 import { PluginLoader, IPlugin, PLUGINS_SCRIPT_ID } from './plugins';
 
 import './resources/styles.scss';
 
 console.log('%cSpeculo - https://github.com/lorceroth/speculo', 'color: royalblue; font-weight: bold');
 
+let config: IConfig;
 let loadedPlugins: IPlugin[];
 
 async function bootstrap() {
   let configLoader = new ConfigLoader();
-  let config = await configLoader.load();
+  config = await configLoader.load();
 
   let pluginLoader = new PluginLoader();
-  let plugins = pluginLoader.load(config);
-
-  loadedPlugins = plugins;
+  loadedPlugins = pluginLoader.load(config);
 }
 
 bootstrap();
@@ -33,5 +32,7 @@ function renderPlugins(plugins: IPlugin[]) {
 }
 
 function renderPlugin(plugin: IPlugin, index: number) {
-  return React.createElement(plugin.component, {key: index, ...plugin.props}, null);
+  let props = { debug: config.debug, ...plugin.props };
+
+  return React.createElement(plugin.component, {key: index, ...props}, null);
 }

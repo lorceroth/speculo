@@ -1,8 +1,11 @@
 import * as React from 'react';
+import './PluginContainer.scss';
 
 export interface IProps {
+  debug?: boolean;
   position?: string;
   size?: string;
+  align?: string;
 }
 
 interface IState {}
@@ -10,12 +13,18 @@ interface IState {}
 export class PluginContainer extends React.Component<IProps, IState> {
 
   static defaultProps: IProps = {
+    debug: false,
     position: '0 0',
     size: null,
+    align: null,
   };
+
+  private ref: React.RefObject<HTMLDivElement>;
 
   constructor(props: IProps) {
     super(props);
+
+    this.ref = React.createRef();
 
     if (this.props.position && !this.validatePosition(this.props.position)) {
       console.error(`Position format is invalid. Expected two numbers (x, y)
@@ -28,8 +37,24 @@ export class PluginContainer extends React.Component<IProps, IState> {
     }
   }
 
+  get width(): number {
+    return this.ref.current ? this.ref.current.clientWidth : 0;
+  }
+
+  get height(): number {
+    return this.ref.current ? this.ref.current.clientHeight : 0;
+  }
+
+  get x(): number {
+    return this.ref.current ? this.ref.current.offsetLeft : 0;
+  }
+
+  get y(): number {
+    return this.ref.current ? this.ref.current.offsetTop : 0;
+  }
+
   validatePosition(position: string): boolean {
-    return /^[\d]+(px|%)? [\d]+(px|%)?$/g.test(position);
+    return /^[-]?[\d]+(px|%)? [-]?[\d]+(px|%)?$/g.test(position);
   }
 
   validateSize(size: string): boolean {
@@ -40,25 +65,52 @@ export class PluginContainer extends React.Component<IProps, IState> {
     return {
       position: 'absolute',
       ...this.getPositionStyle(),
-      ...this.getSizeStyle()
+      ...this.getSizeStyle(),
+      ...this.getAlignmentStyle(),
     } as React.CSSProperties;
   }
 
   getPositionStyle() {
     if (this.props.position) {
-      const [ left, top ] = this.props.position.split(' ');
+      const [ x, y ] = this.props.position.split(' ');
 
-      return { left, top };
+      return {
+        ...this.getPositiveOrNegativeX(x),
+        ...this.getPositiveOrNegativeY(y),
+      };
     }
 
     return {};
+  }
+
+  getPositiveOrNegativeX(x: string) {
+    return x.startsWith('-')
+      ? { right: x.replace(/-/, '') }
+      : { left: x };
+  }
+
+  getPositiveOrNegativeY(y: string) {
+    return y.startsWith('-')
+      ? { bottom: y.replace(/-/, '') }
+      : { top: y };
   }
 
   getSizeStyle() {
     if (this.props.size) {
       const [ width, height ] = this.props.size.split(' ');
 
-      return { width, height } || {};
+      return {
+        width: width !== 'auto' ? width : null,
+        height: height !== 'auto' ? height : null,
+      };
+    }
+
+    return {};
+  }
+
+  getAlignmentStyle() {
+    if (this.props.align) {
+      return { textAlign: this.props.align };
     }
 
     return {};
@@ -66,8 +118,17 @@ export class PluginContainer extends React.Component<IProps, IState> {
 
   render() {
     return (
-      <div style={this.getStyle()}>
+      <div style={this.getStyle()} className={this.props.debug ? 'plugin-container--debug' : null} ref={this.ref}>
+        {this.props.debug && this.renderPosition()}
         {this.props.children}
+      </div>
+    );
+  }
+
+  renderPosition() {
+    return (
+      <div className="plugin-container__position">
+        x: {this.x} y: {this.y} / w: {this.width} h: {this.height}
       </div>
     );
   }

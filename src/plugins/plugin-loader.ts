@@ -46,6 +46,7 @@ export class PluginLoader {
         props: Object.assign({
           position: pluginConfig.position,
           size: pluginConfig.size,
+          align: pluginConfig.align,
         }, pluginConfig.props),
       }
     }
