@@ -14,7 +14,7 @@ const componentName = entrySegments[entrySegments.length - 1].replace(/.tsx/, ''
 module.exports = {
   mode: environment,
   output: {
-    path: path.resolve(__dirname, 'dist/plugins'),
+    path: path.resolve(__dirname, 'dist/plugins', componentName),
     filename: `${componentName}.js`,
     library: componentName,
   },
@@ -39,6 +39,7 @@ module.exports = {
             loader: 'file-loader',
             options: {
               name: '[name].[ext]',
+              publicPath: `plugins/${componentName}`,
             },
           },
         ],

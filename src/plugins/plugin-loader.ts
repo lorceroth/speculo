@@ -33,7 +33,7 @@ export class PluginLoader {
   }
 
   private getPluginPath(plugin: IPluginConfig): string {
-    return PLUGINS_PATH.concat(`/${plugin.name}.js`);
+    return PLUGINS_PATH.concat(`/${plugin.name}/${plugin.name}.js`);
   }
 
   private createPlugin(pluginConfig: IPluginConfig): IPlugin | null {
