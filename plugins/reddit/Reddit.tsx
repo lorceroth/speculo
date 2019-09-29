@@ -6,6 +6,7 @@ import { RedditService } from './services';
 import './Reddit.scss';
 
 interface IProps extends IPluginContainerProps {
+  limit: number;
   subreddits: string[];
 }
 
@@ -19,6 +20,7 @@ interface IState {
 export default class Reddit extends React.Component<IProps, IState> {
 
   static defaultProps: IProps = {
+    limit: 10,
     subreddits: [],
   };
 
@@ -42,6 +44,8 @@ export default class Reddit extends React.Component<IProps, IState> {
     this.interval = setInterval(async () => {
       await this.showNextSubreddit();
     }, 10000);
+
+    console.log('props', this.props);
 
     setTimeout(async () => {
       await this.showNextSubreddit();
@@ -84,16 +88,24 @@ export default class Reddit extends React.Component<IProps, IState> {
   }
 
   async updatePosts(subreddit: Subreddit) {
-    subreddit.posts = await this.redditService.getPosts(subreddit.name);
+    subreddit.posts = await this.redditService.getPosts(subreddit.name, this.props.limit);
   }
 
   render() {
     return (
-      <PluginContainer position={this.props.position} size={this.props.size}>
+      <PluginContainer
+          debug={this.props.debug}
+          position={this.props.position}
+          size={this.props.size}
+          align={this.props.align}>
         {this.state.currentSubreddit && (
           <div className="reddit">
-            <h2 className="reddit__subreddit">Latest posts from r/{this.state.currentSubreddit.name}</h2>
-            {this.state.currentSubreddit.posts.map((post, index) => this.renderPost(post, index))}
+            <h2 className="reddit__subreddit">
+              Latest posts from r/{this.state.currentSubreddit.name}
+            </h2>
+
+            {this.state.currentSubreddit.posts.map((post, index) =>
+              this.renderPost(post, index))}
           </div>
         )}
       </PluginContainer>
@@ -103,23 +115,27 @@ export default class Reddit extends React.Component<IProps, IState> {
   renderPost(post: Post, index: number) {
     return (
       <div className="reddit__post" key={index}>
-        <div className="reddit__score">
-          <span className="reddit__score-number">{post.score}</span>
-        </div>
-        <div className="reddit__content">
-          <h3 className="reddit__title">{post.title}</h3>
-          <ul className="reddit__meta-list">
-            <li className="reddit__meta-item">
-              Posted by u/{post.author}
-            </li>
-            <li className="reddit__meta-item">
-              {moment.unix(post.created).fromNow()}
-            </li>
-            <li className="reddit__meta-item">
-              {post.commentsCount} comments
-            </li>
-          </ul>
-        </div>
+        <h3 className="reddit__title">
+          {post.title}
+        </h3>
+
+        <ul className="reddit__meta">
+          <li>
+            <i className="fas fa-star"></i> {post.score}
+          </li>
+
+          <li>
+            <i className="fas fa-comment-alt"></i> {post.commentsCount}
+          </li>
+
+          <li>
+            <i className="fas fa-user"></i> {post.author}
+          </li>
+
+          <li>
+            <i className="far fa-clock"></i> {moment.unix(post.created).fromNow()}
+          </li>
+        </ul>
       </div>
     );
   }

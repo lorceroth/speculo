@@ -55,7 +55,11 @@ export default class Clock extends React.Component<IProps, IState> {
 
   render() {
     return (
-      <PluginContainer position={this.props.position} size={this.props.size}>
+      <PluginContainer
+          debug={this.props.debug}
+          position={this.props.position}
+          size={this.props.size}
+          align={this.props.align}>
         <div className="clock">
           <div className="clock__time">
             {this.time}

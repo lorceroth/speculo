@@ -1,5 +1,5 @@
 {
-  "debug": false,
+  "debug": true,
   "plugins": [
     {
       "name": "Clock",
@@ -18,6 +18,16 @@
           "dotnet",
           "python"
         ]
+      }
+    },
+    {
+      "name": "SMHI",
+      "position": "-0 0",
+      "size": "550px auto",
+      "align": "right",
+      "props": {
+        "lat": "58.2299",
+        "lon": "11.9159"
       }
     }
   ]

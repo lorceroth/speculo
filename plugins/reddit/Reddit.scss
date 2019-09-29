@@ -3,70 +3,38 @@
 @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/solid.min.css');
 
 .reddit {
-  max-width: 700px;
-
   &__subreddit {
-    font-size: 24px;
+    font-size: 32px;
     font-weight: 500;
     margin-bottom: 10px;
   }
 
   &__post {
     display: flex;
-    align-items: center;
-    padding: 15px 0;
-  }
-
-  &__post:not(:last-child) {
-    border-bottom: 1px solid rgba(255, 255, 255, .5);
-  }
-
-  &__score {
-    display: flex;
     flex-direction: column;
-    flex: none;
-    width: 40px;
-    align-items: center;
-    justify-content: center;
-    margin-right: 10px;
-  }
-
-  &__score-icon {
+    padding: 15px 0;
     font-size: 20px;
   }
 
-  &__score-text {
-    font-size: 24px;
-    font-weight: 700;
-  }
-
-  &__content {
-    flex: 1;
+  &__title {
+    width: 100%;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
+    margin-bottom: 10px;
   }
 
-  &__title {
-    font-weight: 700;
-    margin-bottom: 5px;
-  }
-
-  &__meta-list {
-    margin: 0;
-    padding: 0;
-  }
-
-  &__meta-item {
+  &__meta {
     display: flex;
-    list-style: none;
-    float: left;
-    color: rgba(255, 255, 255, .8);
+    font-size: 18px;
+
+    .fas,
+    .far {
+      margin-right: 5px;
+    }
   }
 
-  &__meta-item:not(:last-child):after {
-    display: block;
-    content: '/';
-    margin: 0 10px;
+  &__meta li:not(:last-child) {
+    margin-right: 20px;
   }
 }

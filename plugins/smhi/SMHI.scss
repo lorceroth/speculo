@@ -1,0 +1,53 @@
+@import './resources/weather-icons.min.css';
+
+.smhi {
+  font-size: 20px;
+
+  &__info {
+    font-size: 32px;
+    font-weight: 500;
+    margin-bottom: 20px;
+  }
+
+  &__info li {
+    display: inline-block;
+  }
+
+  &__info li:not(:last-child) {
+    margin-right: 20px;
+  }
+
+  &__info .wi {
+    margin-right: 5px;
+  }
+
+  &__summary {
+    font-size: 96px;
+    font-weight: 300;
+    margin-bottom: 20px;
+  }
+
+  &__symbol {
+    display: inline-block;
+    margin-right: 30px;
+    font-size: 82px;
+  }
+
+  &__temperature {
+    display: inline-block;
+  }
+
+  &__table {
+    width: 100%;
+  }
+
+  &__table td {
+    padding: 5px 10px;
+    text-align: right;
+
+    &.smhi__table-text,
+    &.smhi__table-symbol {
+      text-align: left;
+    }
+  }
+}

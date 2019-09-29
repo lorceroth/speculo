@@ -12,23 +12,23 @@ export class RedditService {
     private cacheStorage: CacheStorage = new CacheStorage('reddit')
   ) {}
 
-  async getPosts(subreddit: string): Promise<Post[]> {
+  async getPosts(subreddit: string, limit: number): Promise<Post[]> {
     if (this.cacheStorage.hasExpired(subreddit)) {
-      return await this.getPostsFromReddit(subreddit);
+      return await this.getPostsFromReddit(subreddit, limit);
     }
 
     return this.getPostsFromCache(subreddit);
   }
 
-  private async getPostsFromReddit(subreddit: string): Promise<Post[]> {
+  private async getPostsFromReddit(subreddit: string, limit: number): Promise<Post[]> {
     console.log('Get posts from reddit', subreddit);
-    let url = BASE_URL.concat(`/r/${subreddit}.json?limit=10`);
+    let url = BASE_URL.concat(`/r/${subreddit}.json?limit=${limit}`);
 
     let response = await axios.get(url);
-    let data = response.data;
+    let content = (response.data.data.children as any[]).slice(0, limit);
 
-    let posts = (data.data.children as any[]).map(item =>
-      Post.createFromResponse(item.data));
+    let posts = content.map(item =>
+      Post.createFromObject(item.data));
 
     this.cacheStorage.set(subreddit, posts, CACHE_TIME);
 
