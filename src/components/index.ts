@@ -1,1 +1,5 @@
-export { PluginContainer, IProps as IPluginContainerProps } from './PluginContainer';
+export {
+  castPluginContainerProps,
+  PluginContainer,
+  IProps as IPluginContainerProps
+} from './PluginContainer';

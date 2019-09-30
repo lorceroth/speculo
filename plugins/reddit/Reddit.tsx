@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as moment from 'moment';
-import { PluginContainer, IPluginContainerProps } from '@app/components';
+import { PluginContainer, IPluginContainerProps, castPluginContainerProps } from '@app/components';
 import { Subreddit, Post } from './models';
 import { RedditService } from './services';
 import './Reddit.scss';
@@ -93,11 +93,7 @@ export default class Reddit extends React.Component<IProps, IState> {
 
   render() {
     return (
-      <PluginContainer
-          debug={this.props.debug}
-          position={this.props.position}
-          size={this.props.size}
-          align={this.props.align}>
+      <PluginContainer {...castPluginContainerProps(this.props)}>
         {this.state.currentSubreddit && (
           <div className="reddit">
             <h2 className="reddit__subreddit">

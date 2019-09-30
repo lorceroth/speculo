@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { PluginContainer, IPluginContainerProps } from '@app/components';
+import { PluginContainer, IPluginContainerProps, castPluginContainerProps } from '@app/components';
 import { SMHIService } from './services';
 import { Forecast, TimeSeries } from './models';
 import { Symbol } from './Symbol';
@@ -55,11 +55,7 @@ export default class SMHI extends React.Component<IProps, IState> {
 
   render() {
     return (
-      <PluginContainer
-          debug={this.props.debug}
-          position={this.props.position}
-          size={this.props.size}
-          align={this.props.align}>
+      <PluginContainer {...castPluginContainerProps(this.props)}>
         {this.state.isLoaded && (
           <div className="smhi">
             {this.renderInfo()}

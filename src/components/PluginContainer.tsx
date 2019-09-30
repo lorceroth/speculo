@@ -1,5 +1,6 @@
 import * as React from 'react';
 import './PluginContainer.scss';
+import { IPluginContainerProps } from '.';
 
 export interface IProps {
   debug?: boolean;
@@ -9,6 +10,21 @@ export interface IProps {
 }
 
 interface IState {}
+
+/**
+ * Casts an object derived from IPluginContainerProps and returns
+ * only the properties that are relative to the plugin container.
+ *
+ * @param props The plugin container properties.
+ */
+export function castPluginContainerProps(props: IPluginContainerProps): IPluginContainerProps {
+  return {
+    debug: props.debug,
+    position: props.position,
+    size: props.size,
+    align: props.align,
+  };
+}
 
 export class PluginContainer extends React.Component<IProps, IState> {
 

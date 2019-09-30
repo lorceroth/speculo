@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as moment from 'moment';
-import { PluginContainer, IPluginContainerProps } from '@app/components';
+import { PluginContainer, IPluginContainerProps, castPluginContainerProps } from '@app/components';
 import './Clock.scss';
 
 interface IProps extends IPluginContainerProps {
@@ -55,11 +55,7 @@ export default class Clock extends React.Component<IProps, IState> {
 
   render() {
     return (
-      <PluginContainer
-          debug={this.props.debug}
-          position={this.props.position}
-          size={this.props.size}
-          align={this.props.align}>
+      <PluginContainer {...castPluginContainerProps(this.props)}>
         <div className="clock">
           <div className="clock__time">
             {this.time}
